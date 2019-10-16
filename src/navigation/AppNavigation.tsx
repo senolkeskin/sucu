@@ -3,7 +3,8 @@ import {
   createStackNavigator,
   createAppContainer,
   createSwitchNavigator,
-  createDrawerNavigator
+  createDrawerNavigator,
+  createBottomTabNavigator
 } from "react-navigation";
 
 import { Dimensions } from "react-native";
@@ -16,17 +17,17 @@ import SideBar from "../screens/AppScreens/SideBar";
 import Login from "../screens/AuthScreens/Login";
 import AuthLoading from "../screens/AuthLoading";
 
-const MainStack = createStackNavigator(
+const MainStack = createBottomTabNavigator(
   {
-    Home: { screen: Home }
+    Home: { screen: Home },
+
   },
   {
     initialRouteName: "Home",
-    headerMode: "none"
   }
 );
 
-const AuthStack = createStackNavigator(
+const LoginScreen = createStackNavigator(
   {
     Login: { screen: Login }
   },
@@ -36,27 +37,16 @@ const AuthStack = createStackNavigator(
   }
 );
 
-const AppStack = createDrawerNavigator(
-  {
-    MainStack: { screen: MainStack },
-    Blank: { screen: Blank }
-  },
-  {
-    drawerWidth: width - 50,
-    drawerPosition: "left",
-    contentComponent: props => <SideBar {...props} />
-  }
-);
 
 export default createAppContainer(
   createSwitchNavigator(
     {
       AuthLoading: AuthLoading,
-      AuthStack: AuthStack,
-      AppStack: AppStack
+      LoginScreen: LoginScreen,
+      MainStack: MainStack,
     },
     {
-      initialRouteName: "AuthLoading"
+      initialRouteName: "AppStack" //createDrawernavigator içindeki bir sayfa buraya yazılamazmış!!!!
     }
   )
 );

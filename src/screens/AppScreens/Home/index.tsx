@@ -46,7 +46,7 @@ class Home extends Component<Props, State> {
   handleLogout = () => {
     const { navigation } = this.props;
     logoutUserService().then(() => {
-      navigation.navigate("AuthStack");
+      navigation.navigate("LoginScreen");
     });
   };
 
@@ -57,7 +57,6 @@ class Home extends Component<Props, State> {
       <View style={styles.container}>
         <Header
           title="Home"
-          leftButtonPress={() => navigation.openDrawer()}
           rightButtonPress={() => this.handleLogout()}
         />
         <FlatList

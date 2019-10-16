@@ -4,15 +4,19 @@ import {
   Text,
   KeyboardAvoidingView,
   ScrollView,
-  Platform
+  Platform,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  StatusBar,
 } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { loginUserService } from "../../../redux/services/user";
-import { Input, Button } from "../../../components";
 import styles from "./styles";
+
+const logo = require("./water.png");
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
@@ -29,7 +33,7 @@ const loginSchema = Yup.object().shape({
     .max(16)
     .required(),
   password: Yup.string()
-    .matches(/^[a-zA-Z]+(\s?[a-zA-z]+)*$/)
+    .matches(/^[a-zA-Z0-9_-]+$/)
     .min(6)
     .max(16)
     .required()
@@ -37,15 +41,17 @@ const loginSchema = Yup.object().shape({
 
 class Login extends Component<Props, {}> {
   handleLogin = (values: userData) => {
+    debugger;
     const { navigation } = this.props;
     loginUserService(values.username, values.password).then(res => {
-      navigation.navigate("AppStack");
+      navigation.navigate("HomeScreen");
     });
   };
 
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar backgroundColor="#2B6EDC"/>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
@@ -56,32 +62,50 @@ class Login extends Component<Props, {}> {
               onSubmit={values => this.handleLogin(values)}
             >
               {props => {
-                console.log(props, "fdsfsdfdsf");
                 return (
                   <View>
                     <View style={styles.headStyle}>
-                      <Icon name="emotsmile" size={100} />
+                      <Image 
+                        style={styles.logo}
+                        source={logo}
+                             
+                      />
                       <Text style={styles.headText}>
-                        Build Something Amazing
+                        SUCU
                       </Text>
                     </View>
                     <View style={styles.inputContainer}>
-                      <Input
-                        placeholder="Username"
+                      <TextInput
+                        style={styles.input}
+                        placeholder="Kullanıcı Adı"
+                        placeholderTextColor="white"
                         value={props.values.username}
+                        keyboardType="email-address"
+                        autoCapitalize="none"
+                        autoCorrect={false}
                         onChangeText={props.handleChange("username")}
                         onBlur={props.handleBlur("username")}
-                        error={props.touched.username && props.errors.username}
                       />
-                      <Input
-                        placeholder="Password"
+                      <TextInput
+                        style={styles.input}
+                        placeholder="Şifre"
+                        placeholderTextColor="white"
                         value={props.values.password}
                         onChangeText={props.handleChange("password")}
                         onBlur={props.handleBlur("password")}
                         secureTextEntry
-                        error={props.touched.password && props.errors.password}
                       />
-                      <Button text="Login" onPress={props.handleSubmit} />
+                      <TouchableOpacity style={styles.buttonContainer}>
+                        <Text style={styles.buttonText}
+                        onPress={props.handleSubmit}
+                        >Giriş</Text>
+                      </TouchableOpacity>
+
+                      <Text style={styles.linkText}
+                      onPress={() => this.props.navigation.navigate("Home")}>
+                      Şifremi Unuttum
+                    </Text>
+
                     </View>
                   </View>
                 );
@@ -93,5 +117,7 @@ class Login extends Component<Props, {}> {
     );
   }
 }
+
+
 
 export default Login;
