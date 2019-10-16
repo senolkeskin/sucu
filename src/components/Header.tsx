@@ -14,11 +14,6 @@ export class Header extends Component<Props, {}> {
     const { title, leftButtonPress, rightButtonPress } = this.props;
     return (
       <View style={styles.container}>
-        <View style={styles.leftContainer}>
-          <TouchableOpacity style={styles.iconButton} onPress={leftButtonPress}>
-            <Icon name="ios-menu" size={24} />
-          </TouchableOpacity>
-        </View>
         <View style={styles.midContainer}>
           <Text style={styles.headerTitle}>{title}</Text>
         </View>
