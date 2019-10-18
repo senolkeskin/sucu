@@ -102,7 +102,7 @@ class Login extends Component<Props, {}> {
                       </TouchableOpacity>
 
                       <Text style={styles.linkText}
-                      onPress={() => this.props.navigation.navigate("Home")}>
+                      onPress={() => this.props.navigation.navigate("MainStack")}>
                       Şifremi Unuttum
                     </Text>
 

@@ -23,7 +23,7 @@ export class Header extends Component<Props, {}> {
               style={styles.iconButton}
               onPress={rightButtonPress}
             >
-              <Icon name="ios-power" size={24} />
+              <Icon name="ios-add-circle" size={24} />
             </TouchableOpacity>
           ) : null}
         </View>
@@ -51,8 +51,9 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   headerTitle: {
-    fontSize: 16,
-    fontWeight: "700"
+    fontSize: 18,
+    fontWeight: "700",
+    
   },
   rightContainer: {
     flex: 1,

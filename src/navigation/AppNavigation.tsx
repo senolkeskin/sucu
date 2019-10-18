@@ -16,14 +16,18 @@ import Blank from "../screens/AppScreens/Blank";
 import SideBar from "../screens/AppScreens/SideBar";
 import Login from "../screens/AuthScreens/Login";
 import AuthLoading from "../screens/AuthLoading";
+import Customer from "../screens/customer";
+import Employee from "../screens/employee";
+import Settings from "../screens/settings";
 
 const MainStack = createBottomTabNavigator(
   {
-    Home: { screen: Home },
-
+    Customer: { screen: Customer},
+    Employee: { screen: Employee},
+    Settings: { screen: Settings},
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "Customer",
   }
 );
 
@@ -46,7 +50,7 @@ export default createAppContainer(
       MainStack: MainStack,
     },
     {
-      initialRouteName: "AppStack" //createDrawernavigator içindeki bir sayfa buraya yazılamazmış!!!!
+      initialRouteName: "MainStack" //createDrawernavigator içindeki bir sayfa buraya yazılamazmış!!!!
     }
   )
 );
