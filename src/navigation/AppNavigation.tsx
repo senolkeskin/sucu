@@ -19,6 +19,8 @@ import AuthLoading from "../screens/AuthLoading";
 import Customer from "../screens/customer";
 import Employee from "../screens/employee";
 import Settings from "../screens/settings";
+import addCustomer from "../screens/addCustomer";
+import infoCustomer from "../screens/infoCustomer";
 
 const MainStack = createBottomTabNavigator(
   {
@@ -29,6 +31,26 @@ const MainStack = createBottomTabNavigator(
   {
     initialRouteName: "Customer",
   }
+);
+
+const AddCustomer = createStackNavigator(
+  {
+  AddCustomer: { screen: addCustomer}
+  },
+  {
+    headerMode: "none"
+  }
+
+);
+
+const InfoCustomer = createStackNavigator(
+  {
+  InfoCustomer: { screen: infoCustomer}
+  },
+  {
+    headerMode: "none"
+  }
+
 );
 
 const LoginScreen = createStackNavigator(
@@ -48,6 +70,8 @@ export default createAppContainer(
       AuthLoading: AuthLoading,
       LoginScreen: LoginScreen,
       MainStack: MainStack,
+      AddCustomer: AddCustomer,
+      InfoCustomer: InfoCustomer,
     },
     {
       initialRouteName: "MainStack" //createDrawernavigator içindeki bir sayfa buraya yazılamazmış!!!!

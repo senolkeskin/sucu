@@ -44,7 +44,7 @@ class Login extends Component<Props, {}> {
     debugger;
     const { navigation } = this.props;
     loginUserService(values.username, values.password).then(res => {
-      navigation.navigate("HomeScreen");
+      navigation.navigate("MainStack");
     });
   };
 
@@ -84,7 +84,7 @@ class Login extends Component<Props, {}> {
                         autoCapitalize="none"
                         autoCorrect={false}
                         onChangeText={props.handleChange("username")}
-                        onBlur={props.handleBlur("username")}
+                        onBlur={props.handleBlur("username")}                   
                       />
                       <TextInput
                         style={styles.input}

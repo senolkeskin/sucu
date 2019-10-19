@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { View, FlatList, ActivityIndicator, StatusBar } from "react-native";
+import { View, FlatList, ActivityIndicator, StatusBar, Text } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { Header } from "../components";
+import { HeaderLeft } from "../components";
 import styles from "./styles";
 import { AvatarItem } from "../components";
 import { logoutUserService } from "../redux/services/user";
@@ -19,6 +19,38 @@ interface Props {
   loading: boolean;
 }
 
+const DATA = [
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d22',
+    title: 'Mustafa Başbig',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Oğuz Marifetdsd',
+  },
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'Şenol Keskindsd',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Cihan Şimşirdsd',
+  },
+  
+];
+
+/*function Item(title: any) {
+  return (
+    <View style={styles.row}>
+      <View style={styles.row_cell}>
+        <Text style={styles.musteri_adi}>title</Text>
+        <Text style={styles.alt_bilgi}>alt bilgi</Text>
+      </View>
+      <Text style={styles.tikla}>></Text>
+    </View>
+  );
+}*/
+
 interface itemProp {
   item: any;
 }
@@ -28,7 +60,7 @@ interface State {
   limit: number;
 }
 
-class Employee extends Component<Props, State> {
+class infoCustomer extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -43,10 +75,10 @@ class Employee extends Component<Props, State> {
     fetchImageData(page, limit);
   }
 
-  calisanEkle = () => {
+  anasayfayaDon = () => {
     const { navigation } = this.props;
     logoutUserService().then(() => {
-      navigation.navigate("LoginScreen");
+      navigation.navigate("MainStack");
     });
   };
 
@@ -56,19 +88,22 @@ class Employee extends Component<Props, State> {
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor="#2B6EDC"/>
-        <Header
-          title="Çalışanlar"
-          rightButtonPress={() => this.calisanEkle()}
+        <HeaderLeft
+          title="Müşteriler"
+          leftButtonPress={() => this.anasayfayaDon()}
         />
+        <View style={{marginTop:10}}></View>
         <FlatList
-          data={imageData}
-          keyExtractor={item => item.id}
-          renderItem={({ item }: itemProp) => {
-            return (
-              <AvatarItem avatar={item.download_url} title={item.author} />
-            );
-          }}
-        />
+        data={DATA}
+        renderItem={({ item }) => <View style={styles.row}>
+        <View style={styles.row_cell}>
+          <Text style={styles.musteri_adi}>{item.title}</Text>
+          <Text style={styles.alt_bilgi}>{item.id}</Text>
+        </View>
+        <Text style={styles.tikla}>></Text>
+      </View>}
+        keyExtractor={item => item.id}
+      />
       </View>
     );
   }
@@ -91,4 +126,4 @@ function bindToAction(dispatch: any) {
 export default connect(
   mapStateToProps,
   bindToAction
-)(Employee);
+)(infoCustomer);

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, FlatList, ActivityIndicator } from "react-native";
+import { View, FlatList, ActivityIndicator, StatusBar } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { Header } from "../components";
@@ -28,7 +28,7 @@ interface State {
   limit: number;
 }
 
-class Home extends Component<Props, State> {
+class Settings extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -46,7 +46,7 @@ class Home extends Component<Props, State> {
   handleLogout = () => {
     const { navigation } = this.props;
     logoutUserService().then(() => {
-      navigation.navigate("LoginScreen");
+      navigation.navigate("Employee");
     });
   };
 
@@ -55,9 +55,9 @@ class Home extends Component<Props, State> {
     const { page, limit } = this.state;
     return (
       <View style={styles.container}>
+        <StatusBar backgroundColor="#2B6EDC"/>
         <Header
-          title="Home"
-          rightButtonPress={() => this.handleLogout()}
+          title="Ayarlar"
         />
         <FlatList
           data={imageData}
@@ -67,17 +67,6 @@ class Home extends Component<Props, State> {
               <AvatarItem avatar={item.download_url} title={item.author} />
             );
           }}
-          onEndReached={() => {
-            this.setState({ page: page + 1 });
-            fetchMoreImageData(page + 1, limit);
-          }}
-          ListFooterComponent={
-            loading ? (
-              <View style={styles.loadingFooter}>
-                <ActivityIndicator />
-              </View>
-            ) : null
-          }
         />
       </View>
     );
@@ -101,4 +90,4 @@ function bindToAction(dispatch: any) {
 export default connect(
   mapStateToProps,
   bindToAction
-)(Home);
+)(Settings);

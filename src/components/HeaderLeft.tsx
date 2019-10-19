@@ -9,26 +9,26 @@ interface Props {
   rightButtonPress?: () => void;
 }
 
-export class Header extends Component<Props, {}> {
+export class HeaderLeft extends Component<Props, {}> {
   render() {
     const { title, leftButtonPress, rightButtonPress } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.leftContainer}>
-          
+        {leftButtonPress ? (
+            <TouchableOpacity
+              style={styles.iconButton}
+              onPress={leftButtonPress}
+            >
+              <Icon name="md-arrow-dropleft-circle" size={24} />
+            </TouchableOpacity>
+          ) : null}
         </View>
         <View style={styles.midContainer}>
           <Text style={styles.headerTitle}>{title}</Text>
         </View>
         <View style={styles.rightContainer}>
-          {rightButtonPress ? (
-            <TouchableOpacity
-              style={styles.iconButton}
-              onPress={rightButtonPress}
-            >
-              <Icon name="md-person-add" size={24} />
-            </TouchableOpacity>
-          ) : null}
+          
         </View>
       </View>
     );
