@@ -9,18 +9,29 @@ import {
   Image,
   TouchableOpacity,
   StatusBar,
+  ActivityIndicator,
 } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { loginUserService } from "../../../redux/services/user";
+import { loginUserService } from "../../../redux/actions/loginAction";
 import styles from "./styles";
+import { connect } from "react-redux";
+import FlashMessage,{ showMessage, hideMessage, } from "react-native-flash-message";
+import { AppState } from '../../../redux/store'
+import { stat } from "fs";
 
 const logo = require("./water.png");
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
+  isFinished : boolean;
+  isSucceed : boolean;
+  isLoading : boolean;
+  loginErrorMessage:string;
+  loginUserService : (email : string , password : string ) => void;
 }
+
 interface userData {
   username: string;
   password: string;
@@ -28,9 +39,9 @@ interface userData {
 
 const loginSchema = Yup.object().shape({
   username: Yup.string()
-    .matches(/^[a-zA-Z0-9_-]+$/)
+    .matches(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/)
     .min(4)
-    .max(16)
+    .max(50)
     .required(),
   password: Yup.string()
     .matches(/^[a-zA-Z0-9_-]+$/)
@@ -40,15 +51,54 @@ const loginSchema = Yup.object().shape({
 });
 
 class Login extends Component<Props, {}> {
-  handleLogin = (values: userData) => {
-    debugger;
-    const { navigation } = this.props;
+  showSimpleMessage() {
+
+    if (this.props.isFinished && (!this.props.isSucceed)) { 
+      
+      showMessage({
+        message: "Kullanıcı bulunamadı",
+        type: "info",
+      }    
+      );
+    }
+  }
+
+  handleLogin = (values: userData) => { 
+    /*const { navigation } = this.props;
     loginUserService(values.username, values.password).then(res => {
       navigation.navigate("MainStack");
-    });
+    });*/
+
+    const { loginUserService, isSucceed } = this.props;
+      loginUserService(values.username, values.password);
+      console.log(isSucceed);
+
+     
+
+
   };
+  _renderLoginButton(pr:any){
+    const {isLoading } = this.props;
+    if(isLoading){
+      return (<ActivityIndicator></ActivityIndicator>);
+    }
+
+    return (
+      <TouchableOpacity style={styles.buttonContainer}>
+      <Text style={styles.buttonText}
+      onPress={pr.handleSubmit}
+      >Giriş</Text>
+    </TouchableOpacity>
+    );
+  }
 
   render() {
+
+    if(this.props.isSucceed)
+    {
+      console.log("ata");
+      this.props.navigation.navigate("Customer");
+    }
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor="#2B6EDC"/>
@@ -95,12 +145,9 @@ class Login extends Component<Props, {}> {
                         onBlur={props.handleBlur("password")}
                         secureTextEntry
                       />
-                      <TouchableOpacity style={styles.buttonContainer}>
-                        <Text style={styles.buttonText}
-                        onPress={props.handleSubmit}
-                        >Giriş</Text>
-                      </TouchableOpacity>
-
+                      {this._renderLoginButton(props)}
+  
+              
                       <Text style={styles.linkText}
                       onPress={() => this.props.navigation.navigate("MainStack")}>
                       Şifremi Unuttum
@@ -113,6 +160,7 @@ class Login extends Component<Props, {}> {
             </Formik>
           </ScrollView>
         </KeyboardAvoidingView>
+        {this.showSimpleMessage()}
       </View>
     );
   }
@@ -120,4 +168,21 @@ class Login extends Component<Props, {}> {
 
 
 
-export default Login;
+const mapStateToProps = (state : AppState) => ({
+  isFinished : state.login.isFinished,
+  isSucceed : state.login.isSucceed,
+  isLoading : state.login.isLoading,
+  loginErrorMessage :state.login.loginErrorMessage
+})
+
+function bindToAction(dispatch : any) {
+  return {
+    loginUserService : (email:string , password : string) =>
+    dispatch(loginUserService(email,password))
+ 
+  };
+
+}
+
+
+export default connect(mapStateToProps,bindToAction)(Login);

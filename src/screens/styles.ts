@@ -133,7 +133,13 @@ const styles = StyleSheet.create({
     flex: 0,
     fontSize: 10,
   },
-
+  detay_bilgi: {
+    color: "#0A157A",
+    textAlignVertical: 'top',
+    includeFontPadding: false,
+    flex: 0,
+    fontSize: 15,
+  },
 
 
   
