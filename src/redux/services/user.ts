@@ -1,4 +1,6 @@
 import { AsyncStorage } from "react-native";
+import axios from 'axios';
+import {WATER_USER_LOGIN } from '../constants'
 
 export function fetchImageService(page?: number, limit?: number) {
   return new Promise((resolve, reject) => {
@@ -16,16 +18,22 @@ export function fetchImageService(page?: number, limit?: number) {
 }
 
 export function loginUserService(username: string, password: string) {
-  return new Promise((resolve, reject) => {
-    let userToken = `${username}${password}`;
-    AsyncStorage.setItem("userToken", userToken)
-      .then(() => {
-        resolve(userToken);
-      })
-      .catch(error => {
-        reject(error);
-      });
+  console.log("username: "+username+" password: "+password)
+
+  return axios.post(WATER_USER_LOGIN, {
+    username: username,
+    password: password
+  })
+  .then((response) =>{
+  if(response.data.isSuccess){
+    console.log(response.data.result.token)
+  }
+
+  })
+  .catch((err) => {
+ console.error(err);
   });
+
 }
 
 export function logoutUserService() {

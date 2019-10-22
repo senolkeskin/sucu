@@ -1,22 +1,24 @@
 import React, { Component } from "react";
-import { View, FlatList, ActivityIndicator, StatusBar, Text } from "react-native";
+import { View, FlatList, StatusBar, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { Header } from "../components";
 import styles from "./styles";
-import { AvatarItem } from "../components";
 import { logoutUserService } from "../redux/services/user";
 import {
   fetchImageData,
   fetchMoreImageData
 } from "../redux/actions/fetch";
+import { GetCustomers } from "../redux/actions/homeAction";
+import { AppState } from "../redux/store";
+import { ICustomerItem } from "../redux/models/homeModel";
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState>;
-  fetchImageData: (page?: number, limit?: number) => void;
-  fetchMoreImageData: (page?: number, limit?: number) => void;
-  imageData: any;
-  loading: boolean;
+  isHomeLoading : boolean;
+  customers : ICustomerItem[];
+  GetCustomers : () => void;
+
 }
 
 const DATA = [
@@ -69,10 +71,8 @@ class Customer extends Component<Props, State> {
     };
   }
 
-  componentDidMount() {
-    const { fetchImageData } = this.props;
-    const { page, limit } = this.state;
-    fetchImageData(page, limit);
+  componentWillMount() {
+    this.props.GetCustomers();
   }
 
   musteriEkle = () => {
@@ -84,12 +84,42 @@ class Customer extends Component<Props, State> {
   musteriInfo = () => {
     const { navigation } = this.props;
     logoutUserService().then(() => {
-      navigation.navigate("InfoCustomer");
+      navigation.navigate("CustomerInfo");
     });
   };
-
+  siparisEkle = () => {
+    const { navigation } = this.props;
+    logoutUserService().then(() => {
+      navigation.navigate("AddOrder");
+    });
+  };
+_renderView(){
+  const {customers, isHomeLoading} = this.props;
+  console.log(isHomeLoading);
+  if(isHomeLoading){
+    return (<ActivityIndicator></ActivityIndicator>);
+  }
+  else{
+    return (<FlatList
+    data={this.props.customers}
+    renderItem={({ item })  => (<View style={styles.row}>
+    <View style={styles.row_cell}>
+      <Text style={styles.musteri_adi}>{item.nameSurname}</Text>
+      <Text style={styles.alt_bilgi}>{item.companyName} {item.customerId}</Text>
+      <Text style={styles.detay_bilgi}
+    onPress={() => this.musteriInfo()}>Detayı görmek için tıklayınız</Text>
+    </View>
+    <Text style={styles.tikla}
+    onPress={() => this.siparisEkle()}>+</Text>
+    </View>)}
+    keyExtractor={item => item.customerId.toString()}
+  />);
+  }
+}
   render() {
-    const { navigation, imageData, fetchMoreImageData, loading } = this.props;
+    const { isHomeLoading, customers } = this.props;
+    console.log("rendered", customers);
+    
     const { page, limit } = this.state;
     return (
       <View style={styles.container}>
@@ -99,34 +129,21 @@ class Customer extends Component<Props, State> {
           rightButtonPress={() => this.musteriEkle()}
         />
         <View style={{marginTop:10}}></View>
-        <FlatList
-        data={DATA}
-        renderItem={({ item }) => <View style={styles.row}>
-        <View style={styles.row_cell}>
-          <Text style={styles.musteri_adi}>{item.title}</Text>
-          <Text style={styles.alt_bilgi}>{item.id}</Text>
-        </View>
-        <Text style={styles.tikla}
-        onPress={() => this.musteriInfo()}>></Text>
-      </View>}
-        keyExtractor={item => item.id}
-      />
+      {this._renderView()}
+     
       </View>
     );
   }
 }
 
-const mapStateToProps = (state: any) => ({
-  imageData: state.data,
-  loading: state.loading
-});
-
+const mapStateToProps = (state : AppState) => ({
+  isHomeLoading : state.home.isHomeLoading,
+  customers : state.home.customers
+})
 function bindToAction(dispatch: any) {
   return {
-    fetchImageData: (page?: number, limit?: number) =>
-      dispatch(fetchImageData(page, limit)),
-    fetchMoreImageData: (page?: number, limit?: number) =>
-      dispatch(fetchMoreImageData(page, limit))
+    GetCustomers: () =>
+    dispatch(GetCustomers())
   };
 }
 

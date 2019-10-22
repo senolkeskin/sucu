@@ -21,10 +21,26 @@ import Employee from "../screens/employee";
 import Settings from "../screens/settings";
 import addCustomer from "../screens/addCustomer";
 import infoCustomer from "../screens/infoCustomer";
+import addOrder from "../screens/addOrder";
+
+const CustomerApp =createStackNavigator(
+  {
+  Customer: { screen: Customer},
+  CustomerAdd : {screen : addCustomer},
+  CustomerInfo : {screen: infoCustomer },
+
+  },
+  {
+
+    headerMode: "none"
+  }
+
+);
+
 
 const MainStack = createBottomTabNavigator(
   {
-    Customer: { screen: Customer},
+    Customer:  CustomerApp,
     Employee: { screen: Employee},
     Settings: { screen: Settings},
   },
@@ -33,19 +49,15 @@ const MainStack = createBottomTabNavigator(
   }
 );
 
-const AddCustomer = createStackNavigator(
-  {
-  AddCustomer: { screen: addCustomer}
-  },
-  {
-    headerMode: "none"
-  }
 
-);
 
-const InfoCustomer = createStackNavigator(
+
+
+
+
+const AddOrder = createStackNavigator(
   {
-  InfoCustomer: { screen: infoCustomer}
+    AddOrder: { screen: addOrder}
   },
   {
     headerMode: "none"
@@ -70,11 +82,11 @@ export default createAppContainer(
       AuthLoading: AuthLoading,
       LoginScreen: LoginScreen,
       MainStack: MainStack,
-      AddCustomer: AddCustomer,
-      InfoCustomer: InfoCustomer,
+      AddCustomer: CustomerApp,
+      AddOrder: AddOrder,
     },
     {
-      initialRouteName: "MainStack" //createDrawernavigator içindeki bir sayfa buraya yazılamazmış!!!!
+      initialRouteName: "AuthLoading" //createDrawernavigator içindeki bir sayfa buraya yazılamazmış!!!!
     }
   )
 );
