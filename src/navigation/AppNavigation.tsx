@@ -28,6 +28,7 @@ const CustomerApp =createStackNavigator(
   Customer: { screen: Customer},
   CustomerAdd : {screen : addCustomer},
   CustomerInfo : {screen: infoCustomer },
+  AddOrder: { screen: addOrder}
 
   },
   {
@@ -57,7 +58,7 @@ const MainStack = createBottomTabNavigator(
 
 const AddOrder = createStackNavigator(
   {
-    AddOrder: { screen: addOrder}
+    
   },
   {
     headerMode: "none"
