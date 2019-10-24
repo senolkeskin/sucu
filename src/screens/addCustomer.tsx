@@ -53,7 +53,7 @@ class Login extends Component<Props, {}> {
         <StatusBar backgroundColor="#2B6EDC"/>
         <HeaderLeft
           title="Müşteri Ekle"
-          leftButtonPress={() => this.anasayfayaDon()}
+          leftButtonPress={() => this.props.navigation.navigate("Customer")}
         />
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}

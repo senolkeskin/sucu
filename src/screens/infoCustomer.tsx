@@ -75,13 +75,6 @@ class infoCustomer extends Component<Props, State> {
     fetchImageData(page, limit);
   }
 
-  anasayfayaDon = () => {
-    const { navigation } = this.props;
-    logoutUserService().then(() => {
-      navigation.navigate("MainStack");
-    });
-  };
-
   render() {
     const { navigation, imageData, fetchMoreImageData, loading } = this.props;
     const { page, limit } = this.state;
@@ -89,8 +82,8 @@ class infoCustomer extends Component<Props, State> {
       <View style={styles.container}>
         <StatusBar backgroundColor="#2B6EDC"/>
         <HeaderLeft
-          title="Müşteriler"
-          leftButtonPress={() => this.anasayfayaDon()}
+          title="Detay"
+          leftButtonPress={() => this.props.navigation.navigate("Customer")}
         />
         <View style={{marginTop:10}}></View>
         <FlatList

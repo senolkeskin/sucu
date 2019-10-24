@@ -75,26 +75,8 @@ class Customer extends Component<Props, State> {
     this.props.GetCustomers();
   }
 
-  musteriEkle = () => {
-    const { navigation } = this.props;
-    logoutUserService().then(() => {
-      navigation.navigate("AddCustomer");
-    });
-  };
-  musteriInfo = () => {
-    const { navigation } = this.props;
-    logoutUserService().then(() => {
-      navigation.navigate("CustomerInfo");
-    });
-  };
-  siparisEkle = () => {
-    const { navigation } = this.props;
-    logoutUserService().then(() => {
-      navigation.navigate("AddOrder");
-    });
-  };
 _renderView(){
-  const {customers, isHomeLoading} = this.props;
+  const {customers, isHomeLoading,navigation} = this.props;
   console.log(isHomeLoading);
   if(isHomeLoading){
     return (<ActivityIndicator></ActivityIndicator>);
@@ -107,10 +89,10 @@ _renderView(){
       <Text style={styles.musteri_adi}>{item.nameSurname}</Text>
       <Text style={styles.alt_bilgi}>{item.companyName} {item.customerId}</Text>
       <Text style={styles.detay_bilgi}
-    onPress={() => this.musteriInfo()}>Detayı görmek için tıklayınız</Text>
+    onPress={() => this.props.navigation.navigate("CustomerInfo")}>Detayı görmek için tıklayınız</Text>
     </View>
     <Text style={styles.tikla}
-    onPress={() => this.siparisEkle()}>+</Text>
+    onPress={() => this.props.navigation.navigate("AddOrder")}>+</Text>
     </View>)}
     keyExtractor={item => item.customerId.toString()}
   />);
@@ -126,7 +108,7 @@ _renderView(){
         <StatusBar backgroundColor="#2B6EDC"/>
         <Header
           title="Müşteriler"
-          rightButtonPress={() => this.musteriEkle()}
+          rightButtonPress={() => this.props.navigation.navigate("CustomerAdd")}
         />
         <View style={{marginTop:10}}></View>
       {this._renderView()}
