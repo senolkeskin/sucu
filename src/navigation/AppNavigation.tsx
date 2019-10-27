@@ -16,28 +16,25 @@ import Blank from "../screens/AppScreens/Blank";
 import SideBar from "../screens/AppScreens/SideBar";
 import Login from "../screens/AuthScreens/Login";
 import AuthLoading from "../screens/AuthLoading";
-import Customer from "../screens/customer";
-import Employee from "../screens/employee";
-import Settings from "../screens/settings";
-import addCustomer from "../screens/addCustomer";
-import infoCustomer from "../screens/infoCustomer";
-import addOrder from "../screens/addOrder";
+import Customer from "../pages/customer";
+import Employee from "../pages/employee";
+import Settings from "../pages/settings";
+import addCustomer from "../pages/addCustomer";
+import OrdersCustomer from "../pages/OrdersCustomer";
+import addOrder from "../pages/addOrder";
 
 const CustomerApp =createStackNavigator(
   {
   Customer: { screen: Customer},
   CustomerAdd : {screen : addCustomer},
-  CustomerInfo : {screen: infoCustomer },
+  OrdersCustomer : {screen: OrdersCustomer },
   AddOrder: { screen: addOrder}
-
   },
   {
-
     headerMode: "none"
   }
 
 );
-
 
 const MainStack = createBottomTabNavigator(
   {
@@ -50,22 +47,6 @@ const MainStack = createBottomTabNavigator(
   }
 );
 
-
-
-
-
-
-
-const AddOrder = createStackNavigator(
-  {
-    
-  },
-  {
-    headerMode: "none"
-  }
-
-);
-
 const LoginScreen = createStackNavigator(
   {
     Login: { screen: Login }
@@ -76,7 +57,6 @@ const LoginScreen = createStackNavigator(
   }
 );
 
-
 export default createAppContainer(
   createSwitchNavigator(
     {
@@ -84,7 +64,6 @@ export default createAppContainer(
       LoginScreen: LoginScreen,
       MainStack: MainStack,
       AddCustomer: CustomerApp,
-      AddOrder: AddOrder,
     },
     {
       initialRouteName: "AuthLoading" //createDrawernavigator içindeki bir sayfa buraya yazılamazmış!!!!

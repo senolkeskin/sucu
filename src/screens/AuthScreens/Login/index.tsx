@@ -64,19 +64,11 @@ class Login extends Component<Props, {}> {
   }
 
   handleLogin = (values: userData) => { 
-    /*const { navigation } = this.props;
-    loginUserService(values.username, values.password).then(res => {
-      navigation.navigate("MainStack");
-    });*/
-
     const { loginUserService, isSucceed } = this.props;
       loginUserService(values.username, values.password);
       console.log(isSucceed);
-
-     
-
-
   };
+
   _renderLoginButton(pr:any){
     const {isLoading } = this.props;
     if(isLoading){
@@ -93,7 +85,6 @@ class Login extends Component<Props, {}> {
   }
 
   render() {
-
     if(this.props.isSucceed)
     {
       console.log("ata");
@@ -126,7 +117,7 @@ class Login extends Component<Props, {}> {
                     </View>
                     <View style={styles.inputContainer}>
                       <TextInput
-                        style={styles.input}
+                        style={styles.searchInput}
                         placeholder="Kullanıcı Adı"
                         placeholderTextColor="white"
                         value={props.values.username}
@@ -179,7 +170,6 @@ function bindToAction(dispatch : any) {
   return {
     loginUserService : (email:string , password : string) =>
     dispatch(loginUserService(email,password))
- 
   };
 
 }

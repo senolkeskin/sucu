@@ -26,7 +26,7 @@ export class Header extends Component<Props, {}> {
               style={styles.iconButton}
               onPress={rightButtonPress}
             >
-              <Icon name="md-person-add" size={24} />
+              <Icon name="md-person-add" size={24} color={"white"} />
             </TouchableOpacity>
           ) : null}
         </View>
@@ -55,7 +55,9 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 16,
-    fontWeight: "700"
+    fontWeight: "700",
+    color:"white"
+    
   },
   rightContainer: {
     flex: 1,

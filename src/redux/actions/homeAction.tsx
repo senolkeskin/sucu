@@ -2,10 +2,11 @@ import { AsyncStorage } from "react-native";
 import axios from 'axios'
 import {WATER_CUSTOMERS_HOME_GET} from './../constants'
 import { Dispatch } from "react";
-import {CUSTOMER_GET,HOME_LOADİNG_CUSTOMERS } from './../types'
+import {CUSTOMER_GET,HOME_LOADING_CUSTOMERS } from './../types'
 //import { navigate } from '../services/Navigator';
 import {Action} from '../states'
 import { ICustomerItem } from "../models/homeModel";
+import { number } from "prop-types";
 
 
 // export function controlemail(email: string) {
@@ -44,6 +45,7 @@ export function GetCustomers() {
     
   if(response.data.isSuccess){
       var customersModel :ICustomerItem[] = [];
+      
       response.data.result.homeCustomerItemModels.forEach((customer:any) => {
             var customerItem : ICustomerItem={
                     customerId : customer.customerId,
@@ -54,6 +56,7 @@ export function GetCustomers() {
       });
    
       dispatch(customers(customersModel));
+      
     }
    
   
@@ -74,7 +77,7 @@ export function GetCustomers() {
 
 
 export const loading = (loader : boolean) => ({
-    type : HOME_LOADİNG_CUSTOMERS,
+    type : HOME_LOADING_CUSTOMERS,
     payload : loader
   })
 
@@ -82,3 +85,5 @@ export const loading = (loader : boolean) => ({
     type : CUSTOMER_GET,
     payload : customers
   })
+
+  
