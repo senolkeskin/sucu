@@ -6,6 +6,7 @@ import reducer from "./reducers";
 import loginRed from './reducers/loginReducers'
 import HomeReducers from './reducers/homeReducers';
 import OrderReducers from "./reducers/orderReducers";
+import customerAddReducers from "./reducers/customerAddReducers";
 
 const persistConfig = {
   key: "root",
@@ -21,6 +22,7 @@ if (process.env.NODE_ENV === `development`) {
 }
 
 const rootReducer = combineReducers({
+  customerAdd: customerAddReducers,
   orders: OrderReducers,
   home : HomeReducers,
   system: reducer,
