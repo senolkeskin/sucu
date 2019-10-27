@@ -3,9 +3,7 @@ import axios from 'axios'
 import {WATER_USER_LOGIN} from './../constants'
 import { Dispatch } from "react";
 import {LOGIN_FAILED,LOGIN_STARTED,LOGIN_SUCCEED,RESET_PROPS} from './../types'
-//import { navigate } from '../services/Navigator';
 import {Action} from '../states'
-import { ICustomerItem } from "../models/homeModel";
 
 
 export function loginUserService(username:string, password:string) {
@@ -14,12 +12,6 @@ export function loginUserService(username:string, password:string) {
 
 
     dispatch(loading(true));
-
-    // dispatch({
-    //   type:LOGIN_STARTED,
-    // });   
-    const token:string = "tokeeeeeeennnnnnnnnnnnnn";
-    //response.data.result.token
 
   axios.post(WATER_USER_LOGIN,
     {
@@ -31,17 +23,14 @@ export function loginUserService(username:string, password:string) {
 
     AsyncStorage.setItem("userToken", response.data.result.token)
     .then(() => {       
-      // dispatch(loading(false)); 
       AsyncStorage.setItem("UserId", response.data.result.userId.toString()).then(()=>{
         dispatch(loginIsSucceed(true,"")); 
-        console.log("succeed");
       })
     })
     .catch(error => { 
       
       console.log(error + 'error kaydetme asn storage')   
-      // dispatch(loading(false));
-      dispatch(loginIsSucceed(false,""));
+      dispatch(loginIsSucceed(false,"Bir hata oluştu."));
       dispatch(reset());
     });
     }
@@ -50,18 +39,11 @@ export function loginUserService(username:string, password:string) {
   
   else {
     if(response.data.message == "User.Login.UserNotFound"){
-      console.log("Error girid");
-      dispatch(loginIsSucceed(false,"Böyle bir kullanıcı bulunamadı"));
-
-  
+      dispatch(loginIsSucceed(false,"Böyle bir kullanıcı bulunamadı!")); 
     }
-
-
   }
   })
-  .catch((err) => {
-    console.log(err + "error axios") 
-    // dispatch(loading(false));
+  .catch(() => {
     dispatch(loginIsSucceed(false, "Bir hata oluştu."));
     dispatch(reset());
 

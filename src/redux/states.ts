@@ -30,3 +30,9 @@ export interface State {
     orders: IOrderItem[];
     isOrderLoading: boolean;
   }
+
+  export interface CustomerAdd
+  {
+    isSuccess: boolean,
+    CustomerAddMessage: string,
+  }

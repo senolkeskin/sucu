@@ -65,6 +65,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 120,
     paddingVertical: 15,
   },
+  errorMessageText: {
+    textAlign: "center",
+    color: "#CE0404",
+    fontWeight: "900",
+    fontSize:15,
+  },
   
   
 

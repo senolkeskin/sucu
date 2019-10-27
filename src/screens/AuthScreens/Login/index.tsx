@@ -51,17 +51,6 @@ const loginSchema = Yup.object().shape({
 });
 
 class Login extends Component<Props, {}> {
-  showSimpleMessage() {
-
-    if (this.props.isFinished && (!this.props.isSucceed)) { 
-      
-      showMessage({
-        message: "Kullanıcı bulunamadı",
-        type: "info",
-      }    
-      );
-    }
-  }
 
   handleLogin = (values: userData) => { 
     const { loginUserService, isSucceed } = this.props;
@@ -117,12 +106,12 @@ class Login extends Component<Props, {}> {
                     </View>
                     <View style={styles.inputContainer}>
                       <TextInput
-                        style={styles.searchInput}
-                        placeholder="Kullanıcı Adı"
+                        style={styles.input}
+                        placeholder="Kullanıcı Adı / E-posta"
                         placeholderTextColor="white"
                         value={props.values.username}
                         keyboardType="email-address"
-                        autoCapitalize="none"
+                        autoCapitalize="words"
                         autoCorrect={false}
                         onChangeText={props.handleChange("username")}
                         onBlur={props.handleBlur("username")}                   
@@ -138,7 +127,7 @@ class Login extends Component<Props, {}> {
                       />
                       {this._renderLoginButton(props)}
   
-              
+                      <Text style={styles.errorMessageText}>{this.props.loginErrorMessage}</Text>
                       <Text style={styles.linkText}
                       onPress={() => this.props.navigation.navigate("MainStack")}>
                       Şifremi Unuttum
@@ -151,7 +140,7 @@ class Login extends Component<Props, {}> {
             </Formik>
           </ScrollView>
         </KeyboardAvoidingView>
-        {this.showSimpleMessage()}
+        
       </View>
     );
   }
