@@ -1,4 +1,5 @@
 import { ICustomerItem } from "./models/homeModel";
+import { IOrderItem } from "./models/orderModel";
 
 export interface State {
     data: any[];
@@ -21,4 +22,11 @@ export interface State {
     isSucceed: boolean;
     loginErrorMessage : string;
   
+  }
+
+  export interface Orders
+  {
+    customerId: number;
+    orders: IOrderItem[];
+    isOrderLoading: boolean;
   }

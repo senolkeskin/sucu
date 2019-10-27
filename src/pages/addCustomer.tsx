@@ -67,32 +67,38 @@ class Login extends Component<Props, {}> {
               {props => {
                 return (
                   <View>
-                    <View>
-                    </View>
                     <View style={styles.inputContainer}>
                       <TextInput
                         style={styles.input}
-                        placeholder="Müşteri Adı / Şirket Adı"
-                        placeholderTextColor="white"
+                        placeholder="Adı"
+                        placeholderTextColor="#9A9A9A"
                         value={props.values.musteriAdi}
                         autoCapitalize="none"
-                        autoCorrect={false}
                         onChangeText={props.handleChange("musteriAdi")}
                         onBlur={props.handleBlur("musteriAdi")}                   
                       />
                       <TextInput
                         style={styles.input}
-                        placeholder="Sebil Sayısı"
-                        placeholderTextColor="white"
+                        placeholder="Soyadı"
+                        placeholderTextColor="#9A9A9A"
                         value={props.values.sebilSayisi}
                         onChangeText={props.handleChange("sebilSayisi")}
                         onBlur={props.handleBlur("sebilSayisi")}
                         secureTextEntry
                       />
-                      <TouchableOpacity style={styles.buttonContainer}>
-                        <Text style={styles.buttonText}
+                      <TextInput
+                        style={styles.input}
+                        placeholder="Şirket Adı"
+                        placeholderTextColor="#9A9A9A"
+                        value={props.values.sebilSayisi}
+                        onChangeText={props.handleChange("sebilSayisi")}
+                        onBlur={props.handleBlur("sebilSayisi")}
+                        secureTextEntry
+                      />
+                      <TouchableOpacity style={styles.customerAddButton}>
+                        <Text style={styles.CustomerAddButtonText}
                         onPress={props.handleSubmit}
-                        >Müşteriyi Ekle</Text>
+                        >Ekle</Text>
                       </TouchableOpacity>
 
                     </View>

@@ -20,7 +20,7 @@ export class HeaderLeft extends Component<Props, {}> {
               style={styles.iconButton}
               onPress={leftButtonPress}
             >
-              <Icon name="md-arrow-dropleft-circle" size={24} />
+              <Icon name="md-arrow-dropleft-circle" size={24} color={"white"} />
             </TouchableOpacity>
           ) : null}
         </View>
@@ -55,7 +55,8 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 16,
-    fontWeight: "700"
+    fontWeight: "700",
+    color: "white"
   },
   rightContainer: {
     flex: 1,
